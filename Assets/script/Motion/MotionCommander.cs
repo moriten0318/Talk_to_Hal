@@ -20,9 +20,7 @@ public class MotionCommander : MonoBehaviour
 
     public void Idle_Motion_Play()
     {
-
         _motionplayer.Play_roopMotion(idle_animation);
-        Debug.Log("アイドリング中・・・");
     }
 
     public void Motion_OnePlay()

@@ -14,6 +14,10 @@ using TMPro;
         public GameObject _ChatContent_parent;///chatnodeの親要素用変数
         public TMP_InputField _TextBox;
         public Scrollbar _ScrollBar;
+
+        public GameObject _motionCommanderObject;
+        private MotionCommander _motionCommander;
+
         string userMessage;
         string returnMessage;
 
@@ -22,7 +26,8 @@ using TMPro;
             //ユーザーがメッセージを入力するInputField(TMP)の宣言
             _TextBox = _TextBox.GetComponent<TMPro.TMP_InputField>();
             _ScrollBar = _ScrollBar.GetComponent<Scrollbar>();
-    }
+            _motionCommander = _motionCommanderObject.GetComponent<MotionCommander>();
+        }
 
         public void Create_Mine_chatNode()
         {
@@ -51,8 +56,6 @@ using TMPro;
 
     }
 
-
-
         public void Create_GPT_chatNode(string GPTmessage)
         {
             GameObject instantiatedNode_Prefab = Instantiate(_returnChatNode, _ChatContent_parent.transform);///GPTからの返信を表示するPrefab
@@ -64,6 +67,8 @@ using TMPro;
             returnMessage = GPTmessage;
              _returnChatNode_text.text = returnMessage;
             _ScrollBar.value = 0f;
+
+            _motionCommander.Motion_OnePlay();
 
         }
     }

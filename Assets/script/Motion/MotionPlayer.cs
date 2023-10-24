@@ -19,7 +19,7 @@ public class MotionPlayer : MonoBehaviour
             return;
         }
 
-        _motionController.PlayAnimation(animation, isLoop: true);//isloop=trueならループ再生を有効にする
+        _motionController.PlayAnimation(animation, isLoop: true);//isloop=trueならループ再生にする
     }
 
     public void PlayMotion(AnimationClip animation)///このメソッドの引数にAnimationClipを渡せば動くよ
@@ -28,6 +28,6 @@ public class MotionPlayer : MonoBehaviour
         {
             return;
         }
-        _motionController.PlayAnimation(animation, isLoop: true);
+        _motionController.PlayAnimation(animation, isLoop: false);
     }
 }
