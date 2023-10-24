@@ -15,7 +15,7 @@ using TMPro;
         public TMP_InputField _TextBox;
         public Scrollbar _ScrollBar;
 
-        public GameObject _motionCommanderObject;
+        public GameObject _motionCommanderObject;///animationêßå‰óp
         private MotionCommander _motionCommander;
 
         string userMessage;
@@ -52,9 +52,7 @@ using TMPro;
 
             _TextBox.text = "";///InputFieldÇãÛóìÇ…Ç∑ÇÈ
             _ScrollBar.value = 0f;
-
-
-    }
+        }
 
         public void Create_GPT_chatNode(string GPTmessage)
         {
@@ -69,7 +67,7 @@ using TMPro;
             _ScrollBar.value = 0f;
 
             _motionCommander.Motion_OnePlay();
-
         }
+
     }
 
