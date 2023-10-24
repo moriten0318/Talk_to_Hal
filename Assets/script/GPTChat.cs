@@ -51,7 +51,13 @@ public class GPTChat : MonoBehaviour
     private MessageModel assistantModel = new()///GPTのロールプレイの初期設定assistantModel
     {
         role = "system",
-        content = "あなたはバーチャル世界に存在している教師です。"
+        content = 
+        "あなたはバーチャル世界に存在しているAIで、人との会話が大好きです。" +
+        "回答は物腰柔らかく、丁寧な口調で話します。" +
+        "ただし与えられた文章の冒頭が「EmotionAnalyze」で始まる場合に限り、次のルールに従って答えてください。" +
+        "回答は与えられた文章を分析し、その発言をしている人がどのような感情を持っているか答えてください。" +
+        "感情は「怒り」「悲しみ」「驚き」「恥ずかしい」「嬉しい」の５種類いずれかで答えてください。" +
+        "答える際は単語のみ感情を示す５種類の単語のうちいずれかの単語のみを発言してください。"
     };
     private string apiKey;/// GPTのAPIキー
     private List<MessageModel> communicationHistory = new();///これまでのメッセージを格納しておくためのリスト
@@ -67,7 +73,7 @@ public class GPTChat : MonoBehaviour
     private void Communication(string newMessage, Action<MessageModel> result)
     ///
     {
-        Debug.Log("ユーザー："+ newMessage);///コンソールに新しいメッセージがログ出力される
+        ///Debug.Log("ユーザー："+ newMessage);///コンソールに新しいメッセージがログ出力される
         communicationHistory.Add(new MessageModel()///communicationHistoryリストに新しいメッセージを追加する（roleとcontent）
         {
             role = "user",

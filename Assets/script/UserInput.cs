@@ -16,13 +16,10 @@ public class UserInput : MonoBehaviour
         _userTextBox = _userTextBox.GetComponent<TMPro.TMP_InputField>();
 
     }
-    public void GPTChat_MessageSubmit()///InputFieldへの入力が完了したら呼び出してGPTにメッセージを送る
+    public void GPTChat_MessageSubmit()///InputFieldへの入力が完了したらこの関数を呼び出してGPTにメッセージを送る
     {
         string userMessage = _userTextBox.text;
         _gptChat.MessageSubmit(userMessage);
-
-
         Debug.Log("ユーザーのリクエストを送信しました");
-
     }
 }
