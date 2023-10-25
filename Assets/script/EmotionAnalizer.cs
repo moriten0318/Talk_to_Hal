@@ -5,11 +5,11 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class GPTChat : MonoBehaviour
+public class EmotionAnalizer : MonoBehaviour
 {
     #region 必要なクラスの定義など
     [System.Serializable]
-    public class MessageModel/// チャットメッセージのモデルを表す変数の定義
+    public class EmotionAnalize/// チャットメッセージのモデルを表す変数の定義
     {
         public string role;
         public string content;
@@ -18,11 +18,11 @@ public class GPTChat : MonoBehaviour
     public class CompletionRequestModel
     {
         public string model;
-        public List<MessageModel> messages;///ここまでの会話ログを格納しておくためのリスト
+        public List<EmotionAnalize> analysis;///ここまでの会話ログを格納しておくためのリスト
     }
 
     [System.Serializable]
-    public class ChatGPTRecieveModel
+    public class ChatGPTsubModel
     {
         public string id;
         public string @object;
@@ -34,7 +34,7 @@ public class GPTChat : MonoBehaviour
         public class Choice
         {
             public int index;
-            public MessageModel message;
+            public EmotionAnalize message;
             public string finish_reason;
         }
 
@@ -48,31 +48,31 @@ public class GPTChat : MonoBehaviour
     }
     #endregion
 
-    private MessageModel assistantModel = new()///GPTのロールプレイの初期設定assistantModel
+    private EmotionAnalize subModel = new()///GPTのロールプレイの初期設定assistantModel
     {
         role = "system",
-        content = 
-        "あなたはバーチャル世界に存在しているAIで、人との会話が大好きです。" +
-        "回答は物腰柔らかく、丁寧な口調で話します。" 
+        content =
+        "次のルールに従って答えてください。" +
+        "与えられた文章を分析し、その発言をしている人がどのような感情を持っているか答えてください。" +
+        "感情は「怒り」「悲しみ」「驚き」「恥ずかしい」「嬉しい」の５種類いずれかで答えてください。" +
+        "答える際は単語のみ感情を示す５種類の単語のうちいずれかの単語のみを発言してください。"
     };
     private string apiKey;/// GPTのAPIキー
-    private List<MessageModel> communicationHistory = new();///これまでのメッセージを格納しておくためのリスト
+    private List<EmotionAnalize> communicationHistory = new();///これまでのメッセージを格納しておくためのリスト
 
     public GameObject ChatSystemReturnMessage;
-    ///public EmotionAnalizer _emotionAnalizer;
-    public string GPTresponse;
 
     void Start()
     {
-        communicationHistory.Add(assistantModel);///初期設定をcommunicationHistoryに渡す
+        communicationHistory.Add(subModel);///初期設定をcommunicationHistoryに渡す
         apiKey = Environment.GetEnvironmentVariable("APIkey", EnvironmentVariableTarget.User);
     }
 
-    private void Communication(string newMessage, Action<MessageModel> result)
+    private void Analize(string newMessage, Action<EmotionAnalize> result)
     ///
     {
         ///Debug.Log("ユーザー："+ newMessage);///コンソールに新しいメッセージがログ出力される
-        communicationHistory.Add(new MessageModel()///communicationHistoryリストに新しいメッセージを追加する（roleとcontent）
+        communicationHistory.Add(new EmotionAnalize()///communicationHistoryリストに新しいメッセージを追加する（roleとcontent）
         {
             role = "user",
             content = newMessage
@@ -83,7 +83,7 @@ public class GPTChat : MonoBehaviour
             new CompletionRequestModel()
             {
                 model = "gpt-3.5-turbo",
-                messages = communicationHistory
+                analysis = communicationHistory
             }, true);
         var headers = new Dictionary<string, string>
             {
@@ -114,29 +114,25 @@ public class GPTChat : MonoBehaviour
             else
             {
                 var responseString = operation.webRequest.downloadHandler.text;
-                var responseObject = JsonUtility.FromJson<ChatGPTRecieveModel>(responseString);
+                var responseObject = JsonUtility.FromJson<ChatGPTsubModel>(responseString);
                 communicationHistory.Add(responseObject.choices[0].message);
-                Debug.Log(responseObject.choices[0].message.content);
 
-                ///GPTからの返信内容をChatNodeに書き込んで生成(Create_GPT_chatNode関数を呼んでる？)
-                ChatSystemReturnMessage.SendMessage("Create_GPT_chatNode", responseObject.choices[0].message.content);
-                GPTresponse = responseObject.choices[0].message.content;
             }
             request.Dispose();
         };
     }
 
-    public void MessageSubmit(string sendMessage)///ユーザーからのメッセージをGPTに送信する（引数がstring型のメッセージ内容になる）
+    public void MoodDetect(string sendMessage)///GPTからの返信を感情分析する（引数がstring型のメッセージ内容になる）
     {
-        communicationHistory.Add(new MessageModel
+        communicationHistory.Add(new EmotionAnalize
         {
             role = "user",
             content = sendMessage
         });
 
-        Communication(sendMessage, (result) =>
+        Analize(sendMessage, (result) =>
         {
-            Debug.Log("アシスタント：" + result.content);
+            Debug.Log("現在の感情は：" + result.content+"　です");
         });
     }
 }

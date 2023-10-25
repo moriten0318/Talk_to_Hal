@@ -51,6 +51,7 @@ using TMPro;
             _myChatNode_text.text = userMessage;
 
             _TextBox.text = "";///InputFieldを空欄にする
+            Debug.Log("フィールドを空にしました");
             _ScrollBar.value = 0f;
         }
 
