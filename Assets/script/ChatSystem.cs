@@ -51,7 +51,7 @@ using TMPro;
             _myChatNode_text.text = userMessage;
 
             _TextBox.text = "";///InputFieldを空欄にする
-            Debug.Log("フィールドを空にしました");
+            ///Debug.Log("フィールドを空にしました");
             _ScrollBar.value = 0f;
         }
 
@@ -67,7 +67,6 @@ using TMPro;
              _returnChatNode_text.text = returnMessage;
             _ScrollBar.value = 0f;
 
-            _motionCommander.Motion_OnePlay();
         }
 
     }

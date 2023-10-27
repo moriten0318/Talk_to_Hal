@@ -13,9 +13,22 @@ public class MotionCommander : MonoBehaviour
     public AnimationClip idle_animation;
     public AnimationClip current_animation;
 
+    public List<AnimationClip> motionClips = new List<AnimationClip>();
+    public AnimationClip normal;
+    public AnimationClip angry;
+    public AnimationClip sad;
+    public AnimationClip surprize;
+    public AnimationClip happy;
+
+
     void Start()
     {
         _motionplayer = _haru_model.GetComponent<MotionPlayer>();
+        motionClips.Add(normal);
+        motionClips.Add(angry);
+        motionClips.Add(sad);
+        motionClips.Add(surprize);
+        motionClips.Add(happy);
     }
 
     public void Idle_Motion_Play()
@@ -23,9 +36,36 @@ public class MotionCommander : MonoBehaviour
         _motionplayer.Play_roopMotion(idle_animation);
     }
 
-    public void Motion_OnePlay()
+    public void Motion_OnePlay(AnimationClip clip)
     {
-        _motionplayer.PlayMotion(current_animation);
+        _motionplayer.PlayMotion(clip);
+    }
+
+    public int GetEmotionValue(string emotion)
+    {
+        int value = 0; // デフォルトの値
+
+        switch (emotion)
+        {
+            case "怒り":
+                value = 1;
+                break;
+            case "悲しい":
+                value = 2;
+                break;
+            case "驚き":
+                value = 3;
+                break;
+            case "嬉しい":
+                value = 4;
+                break;
+            default:
+                // 想定外の感情が渡された場合、エラーメッセージを表示したり、デフォルト値を保持したりします
+                Debug.LogError("無効な感情: " + emotion);
+                break;
+        }
+
+        return value;
     }
 
 }

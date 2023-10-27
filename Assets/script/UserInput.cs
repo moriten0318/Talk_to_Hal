@@ -8,6 +8,7 @@ public class UserInput : MonoBehaviour
 {
     [SerializeField] TMP_InputField _userTextBox;
     public GPTChat _gptChat;
+    public string userMessage;
 
 
     void Start()
@@ -18,7 +19,7 @@ public class UserInput : MonoBehaviour
     }
     public void GPTChat_MessageSubmit()///InputFieldへの入力が完了したらこの関数を呼び出してGPTにメッセージを送る
     {
-        string userMessage = _userTextBox.text;
+        userMessage = _userTextBox.text;
         _gptChat.MessageSubmit(userMessage);
         Debug.Log("ユーザーのリクエストを送信しました");
     }

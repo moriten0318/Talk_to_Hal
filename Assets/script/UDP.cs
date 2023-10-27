@@ -8,12 +8,19 @@ using System.Threading.Tasks;
 
 public class UDP : MonoBehaviour
 {
+    ///UDP通信周りを管理するクラス
     private string host = "127.0.0.1";
     private int Un_Pyport = 50007;
     private int Py_Unport = 50008;
     private UdpClient client1;
     private UdpClient client2;
-    IPEndPoint remoteEP = null;
+    ///IPEndPoint remoteEP = null;
+
+    public MotionCommander MotionCommander;
+    public int num = 0;
+
+
+
 
     void Start()
     {
@@ -31,23 +38,24 @@ public class UDP : MonoBehaviour
             UdpReceiveResult result = await client2.ReceiveAsync();
             byte[] data = result.Buffer;
             string text = Encoding.UTF8.GetString(data);
-            Debug.Log(text);
+            Debug.Log("感情:" + text);
+            ///モーションの再生と音声の再生
+            num = MotionCommander.GetEmotionValue(text);
+
+            MotionCommander.Motion_OnePlay(MotionCommander.motionClips[num]);
+
+
         }
 
     }
 
-    public void send()
+    public void send(string txt)
     { 
         ///UnityからPythonへUDP送信する
-        var message = Encoding.UTF8.GetBytes("Hello World!");
+        var message = Encoding.UTF8.GetBytes(txt);
         client1.Send(message, message.Length);
-        Debug.Log("OK");
     }
 
-    private void emoemo(string txt)
-    {
-        Debug.Log("感情判定：" + txt);
-    }
 
     private void OnDestroy()
     {

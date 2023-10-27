@@ -4,6 +4,7 @@ public class MotionPlayer : MonoBehaviour
 {
     /// <summary>
     /// 動かしたいLive2DモデルにCubismMotionControllerと一緒にアタッチすること！
+    /// 基本このスクリプトはいじらないこと！
     /// </summary>
     CubismMotionController _motionController;
     private void Start()

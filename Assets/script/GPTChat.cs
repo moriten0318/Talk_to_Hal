@@ -52,15 +52,18 @@ public class GPTChat : MonoBehaviour
     {
         role = "system",
         content = 
-        "あなたはバーチャル世界に存在しているAIで、人との会話が大好きです。" +
-        "回答は物腰柔らかく、丁寧な口調で話します。" 
+        "あなたは感情豊かな人で、人との会話が大好きです。" +
+        "嬉しい時、怒る時、悲しい時など、感情が高ぶるとそれを顕著に表現します。"+
+        "あなたは相手に遠慮せず、感情を伝えることに躊躇しません。"+
+        "発言は簡潔で短く話します"
     };
     private string apiKey;/// GPTのAPIキー
     private List<MessageModel> communicationHistory = new();///これまでのメッセージを格納しておくためのリスト
 
     public GameObject ChatSystemReturnMessage;
-    ///public EmotionAnalizer _emotionAnalizer;
+    public UDP _UDP;
     public string GPTresponse;
+    public UserInput UserInput;
 
     void Start()
     {
@@ -118,9 +121,11 @@ public class GPTChat : MonoBehaviour
                 communicationHistory.Add(responseObject.choices[0].message);
                 Debug.Log(responseObject.choices[0].message.content);
 
+                GPTresponse = responseObject.choices[0].message.content;
+                _UDP.send(newMessage); ///pythonに投げる
+
                 ///GPTからの返信内容をChatNodeに書き込んで生成(Create_GPT_chatNode関数を呼んでる？)
                 ChatSystemReturnMessage.SendMessage("Create_GPT_chatNode", responseObject.choices[0].message.content);
-                GPTresponse = responseObject.choices[0].message.content;
             }
             request.Dispose();
         };
