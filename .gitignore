@@ -1,5 +1,6 @@
 .env
-.mp3
+*.mp3
+*.jpg
 /library
 /logs
 /UserSettings
