@@ -15,9 +15,6 @@ using TMPro;
         public TMP_InputField _TextBox;
         public Scrollbar _ScrollBar;
 
-        public GameObject _motionCommanderObject;///animation制御用
-        private MotionCommander _motionCommander;
-
         string userMessage;
         string returnMessage;
 
@@ -26,7 +23,12 @@ using TMPro;
             //ユーザーがメッセージを入力するInputField(TMP)の宣言
             _TextBox = _TextBox.GetComponent<TMPro.TMP_InputField>();
             _ScrollBar = _ScrollBar.GetComponent<Scrollbar>();
-            _motionCommander = _motionCommanderObject.GetComponent<MotionCommander>();
+            _ScrollBar.value = 1;
+        }
+
+        void Update()
+        {
+        _ScrollBar.value = 0;
         }
 
         public void Create_Mine_chatNode()
@@ -52,7 +54,6 @@ using TMPro;
                 _TextBox.text = "";///InputFieldを空欄にする
                 ///Debug.Log("フィールドを空にしました");
                 }
-                _ScrollBar.value = 0f;
         }
 
         public void Create_GPT_chatNode(string GPTmessage)
@@ -65,7 +66,7 @@ using TMPro;
             TextMeshProUGUI _returnChatNode_text = childTransform.GetComponent<TextMeshProUGUI>();
             returnMessage = GPTmessage;
              _returnChatNode_text.text = returnMessage;
-            _ScrollBar.value = 0f;
+            
 
         }
 

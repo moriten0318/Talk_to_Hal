@@ -5,6 +5,7 @@ using UnityEngine;
 public class ButtonClick : MonoBehaviour
 {
     public GameObject button;
+    public GameObject BG;
 
     private void Start()
     {
@@ -20,6 +21,7 @@ public class ButtonClick : MonoBehaviour
         if (button != null)
         {
             button.gameObject.SetActive(false); // ƒ{ƒ^ƒ“‚ÌUI‚ð”ñ•\Ž¦‚É‚·‚é
+            BG.gameObject.SetActive(false);
         }
     }
 }

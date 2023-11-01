@@ -14,21 +14,26 @@ public class MotionCommander : MonoBehaviour
     public AnimationClip current_animation;
 
     public List<AnimationClip> motionClips = new List<AnimationClip>();
+    public List<AnimationClip> happymotions = new List<AnimationClip>();
     public AnimationClip normal;
     public AnimationClip angry;
     public AnimationClip sad;
     public AnimationClip surprize;
     public AnimationClip happy;
-
+    public AnimationClip happy2;
+    public AnimationClip happy3;
 
     void Start()
     {
         _motionplayer = _haru_model.GetComponent<MotionPlayer>();
+
         motionClips.Add(normal);
         motionClips.Add(angry);
         motionClips.Add(sad);
         motionClips.Add(surprize);
         motionClips.Add(happy);
+        motionClips.Add(happy2);
+        motionClips.Add(happy3);
     }
 
     public void Idle_Motion_Play()
@@ -58,7 +63,7 @@ public class MotionCommander : MonoBehaviour
                 value = 3;
                 break;
             case "嬉しい":
-                value = 4;
+                value = 4+Random.Range(0,3); ;
                 break;
             default:
                 // 想定外の感情が渡された場合、エラーメッセージを表示したり、デフォルト値を保持したりします
