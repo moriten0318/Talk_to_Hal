@@ -101,8 +101,9 @@ namespace Live2D.Cubism.Framework.Motion
         /// <param name="speed">Animation speed.</param>
         public void PlayAnimation(AnimationClip clip, int layerIndex = 0, int priority = CubismMotionPriority.PriorityNormal, bool isLoop = true, float speed = 1.0f)
         {
+
             // Fail silently...
-            if(!enabled || !_isActive || _cubismFadeMotionList == null || clip == null
+/*            if(!enabled || !_isActive || _cubismFadeMotionList == null || clip == null
                || layerIndex < 0 || layerIndex >= LayerCount ||
                ((_motionPriorities[layerIndex] >= priority) && (priority != CubismMotionPriority.PriorityForce)))
             {
@@ -116,7 +117,7 @@ namespace Live2D.Cubism.Framework.Motion
 
 
                 return;
-            }
+            }*/
 
             _motionPriorities[layerIndex] = priority;
             _motionLayers[layerIndex].PlayAnimation(clip, isLoop, speed);
