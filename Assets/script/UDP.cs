@@ -39,9 +39,10 @@ public class UDP : MonoBehaviour
             byte[] data = result.Buffer;
             string text = Encoding.UTF8.GetString(data);
             Debug.Log("感情:" + text);
-            ///モーションの再生と音声の再生
-            num = MotionCommander.GetEmotionValue(text);
 
+
+            ///モーションの再生
+            num = MotionCommander.GetEmotionValue(text);
             MotionCommander.Motion_OnePlay(MotionCommander.motionClips[num]);
 
 

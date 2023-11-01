@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
+using VoicevoxBridge;
 
 public class GPTChat : MonoBehaviour
 {
@@ -52,7 +53,11 @@ public class GPTChat : MonoBehaviour
     {
         role = "system",
         content = 
-        "あなたは感情豊かな人で、人との会話が大好きです。" +
+        "あなたは感情豊かな人で、AIではありません。"+
+        "他の人との会話が大好きです。" +
+        "あなたの名前はハルです。朗らかな性格の女性です。"+
+        "あなたの年齢はお酒が飲める年で、体重はノートパソコン一台分です。"+
+        "あなたは東京学芸大学にある松浦研究室の一員であり、他の学生と一緒に毎日学んでいます。"+
         "嬉しい時、怒る時、悲しい時など、感情が高ぶるとそれを顕著に表現します。"+
         "あなたは相手に遠慮せず、感情を伝えることに躊躇しません。"+
         "発言は簡潔で短く話します"
@@ -60,6 +65,7 @@ public class GPTChat : MonoBehaviour
     private string apiKey;/// GPTのAPIキー
     private List<MessageModel> communicationHistory = new();///これまでのメッセージを格納しておくためのリスト
 
+    [SerializeField] VOICEVOX voicevox;
     public GameObject ChatSystemReturnMessage;
     public UDP _UDP;
     public string GPTresponse;
@@ -122,7 +128,10 @@ public class GPTChat : MonoBehaviour
                 Debug.Log(responseObject.choices[0].message.content);
 
                 GPTresponse = responseObject.choices[0].message.content;
+                PlayVoice(GPTresponse);
                 _UDP.send(newMessage); ///pythonに投げる
+
+
 
                 ///GPTからの返信内容をChatNodeに書き込んで生成(Create_GPT_chatNode関数を呼んでる？)
                 ChatSystemReturnMessage.SendMessage("Create_GPT_chatNode", responseObject.choices[0].message.content);
@@ -130,6 +139,13 @@ public class GPTChat : MonoBehaviour
             request.Dispose();
         };
     }
+
+    public async void PlayVoice(string text)
+    {
+        int speaker = 20;
+        await voicevox.PlayOneShot(speaker, text);
+    }
+
 
     public void MessageSubmit(string sendMessage)///ユーザーからのメッセージをGPTに送信する（引数がstring型のメッセージ内容になる）
     {

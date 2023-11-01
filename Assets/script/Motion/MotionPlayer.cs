@@ -7,6 +7,8 @@ public class MotionPlayer : MonoBehaviour
     /// 基本このスクリプトはいじらないこと！
     /// </summary>
     CubismMotionController _motionController;
+    public AnimationClip idle_animation;
+
     private void Start()
     {
         _motionController = GetComponent<CubismMotionController>();
@@ -30,5 +32,12 @@ public class MotionPlayer : MonoBehaviour
             return;
         }
         _motionController.PlayAnimation(animation, isLoop: false);
+    }
+
+    public void StopMotion()
+    {
+        Debug.Log("モーション止める");
+        _motionController.StopAllAnimation();
+        Debug.Log("モーション止めた");
     }
 }

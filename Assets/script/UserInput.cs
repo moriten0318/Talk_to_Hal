@@ -20,6 +20,10 @@ public class UserInput : MonoBehaviour
     public void GPTChat_MessageSubmit()///InputFieldへの入力が完了したらこの関数を呼び出してGPTにメッセージを送る
     {
         userMessage = _userTextBox.text;
+        if (string.IsNullOrEmpty(userMessage))
+        {
+            return;
+        }
         _gptChat.MessageSubmit(userMessage);
         Debug.Log("ユーザーのリクエストを送信しました");
     }

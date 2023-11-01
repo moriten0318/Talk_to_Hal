@@ -107,6 +107,14 @@ namespace Live2D.Cubism.Framework.Motion
                ((_motionPriorities[layerIndex] >= priority) && (priority != CubismMotionPriority.PriorityForce)))
             {
                 Debug.Log("can't start motion.");
+
+                Debug.Log(enabled);
+                Debug.Log(_isActive);
+                Debug.Log(_cubismFadeMotionList);
+                Debug.Log(clip);
+                Debug.Log(layerIndex);
+
+
                 return;
             }
 

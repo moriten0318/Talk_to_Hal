@@ -31,28 +31,28 @@ using TMPro;
 
         public void Create_Mine_chatNode()
         {
-
-
-            GameObject instantiatedNode_Prefab = Instantiate(_myChatNode, _ChatContent_parent.transform);///Prefab生成
-
-            Transform parent01Transform = instantiatedNode_Prefab.transform;///生成したPrefabはTextの親要素なので、親のTransformとして取得
-            Transform parent02Transform = parent01Transform.Find("ChatBoard");
-            Transform childTransform = parent02Transform.Find("ChatText");
-
-            TextMeshProUGUI _myChatNode_text = childTransform.GetComponent<TextMeshProUGUI>();
-
-
             if (_TextBox.text == "")
             {
                 Debug.LogError("テキストボックスに何も入力されていません");
             }
 
-            userMessage = _TextBox.text;
-            _myChatNode_text.text = userMessage;
+            if (_TextBox.text != "")
+                {
+                GameObject instantiatedNode_Prefab = Instantiate(_myChatNode, _ChatContent_parent.transform);///Prefab生成
 
-            _TextBox.text = "";///InputFieldを空欄にする
-            ///Debug.Log("フィールドを空にしました");
-            _ScrollBar.value = 0f;
+                Transform parent01Transform = instantiatedNode_Prefab.transform;///生成したPrefabはTextの親要素なので、親のTransformとして取得
+                Transform parent02Transform = parent01Transform.Find("ChatBoard");
+                Transform childTransform = parent02Transform.Find("ChatText");
+
+                TextMeshProUGUI _myChatNode_text = childTransform.GetComponent<TextMeshProUGUI>();
+
+                userMessage = _TextBox.text;
+                _myChatNode_text.text = userMessage;
+
+                _TextBox.text = "";///InputFieldを空欄にする
+                ///Debug.Log("フィールドを空にしました");
+                }
+                _ScrollBar.value = 0f;
         }
 
         public void Create_GPT_chatNode(string GPTmessage)

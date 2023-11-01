@@ -38,6 +38,7 @@ public class MotionCommander : MonoBehaviour
 
     public void Motion_OnePlay(AnimationClip clip)
     {
+        _motionplayer.StopMotion();
         _motionplayer.PlayMotion(clip);
     }
 
